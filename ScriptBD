@@ -1,0 +1,305 @@
+USE [master]
+GO
+/****** Object:  Database [ToursBase]    Script Date: 20.01.2023 13:05:58 ******/
+CREATE DATABASE [ToursBase]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'ToursBase', FILENAME = N'C:\Users\DeMonsWords\ToursBase.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'ToursBase_log', FILENAME = N'C:\Users\DeMonsWords\ToursBase_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [ToursBase] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [ToursBase].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [ToursBase] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [ToursBase] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [ToursBase] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [ToursBase] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [ToursBase] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [ToursBase] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [ToursBase] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [ToursBase] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [ToursBase] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [ToursBase] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [ToursBase] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [ToursBase] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [ToursBase] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [ToursBase] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [ToursBase] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [ToursBase] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [ToursBase] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [ToursBase] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [ToursBase] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [ToursBase] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [ToursBase] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [ToursBase] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [ToursBase] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [ToursBase] SET  MULTI_USER 
+GO
+ALTER DATABASE [ToursBase] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [ToursBase] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [ToursBase] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [ToursBase] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [ToursBase] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [ToursBase] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [ToursBase] SET QUERY_STORE = OFF
+GO
+USE [ToursBase]
+GO
+/****** Object:  Table [dbo].[Country]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Country](
+	[Code] [nchar](2) NOT NULL,
+	[Name] [nchar](100) NOT NULL,
+ CONSTRAINT [PK_Country] PRIMARY KEY CLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Hotel]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Hotel](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[CountOfStars] [int] NOT NULL,
+	[CountryCode] [nchar](2) NOT NULL,
+ CONSTRAINT [PK_Hotel] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HotelComment]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HotelComment](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Hoteled] [int] NOT NULL,
+	[Text] [nvarchar](max) NOT NULL,
+	[Author] [nvarchar](100) NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_HotelComment] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Hotellmage]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Hotellmage](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Hoteled] [int] NOT NULL,
+	[ImageSouce] [varbinary](max) NULL,
+ CONSTRAINT [PK_Hotellmage] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[HotelOfTour]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HotelOfTour](
+	[HotelId] [int] IDENTITY(1,1) NOT NULL,
+	[TourId] [int] NOT NULL,
+ CONSTRAINT [PK_HotelOfTour] PRIMARY KEY CLUSTERED 
+(
+	[HotelId] ASC,
+	[TourId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tour]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tour](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[TicketCount] [int] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[ImagePreview] [varbinary](max) NULL,
+	[Price] [money] NOT NULL,
+	[isActual] [bit] NOT NULL,
+ CONSTRAINT [PK_Tour] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Type]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Type](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Type] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TypeOfTour]    Script Date: 20.01.2023 13:05:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TypeOfTour](
+	[Tourid] [int] NOT NULL,
+	[Typeid] [int] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_TypeOfTour] PRIMARY KEY CLUSTERED 
+(
+	[Tourid] ASC,
+	[Typeid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'1 ', N'Ирландия                                                                                            ')
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'2 ', N'Шотландия                                                                                           ')
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'3 ', N'Китай                                                                                               ')
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'4 ', N'Япония                                                                                              ')
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'5 ', N'Россия                                                                                              ')
+INSERT [dbo].[Country] ([Code], [Name]) VALUES (N'6 ', N'Египет                                                                                              ')
+GO
+SET IDENTITY_INSERT [dbo].[Hotel] ON 
+
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (1, N'Отель 1', 3, N'4 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (2, N'Отель 2', 4, N'2 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (11, N'Отель 3', 4, N'1 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (12, N'Отель 4', 5, N'2 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (13, N'Отель 5', 3, N'1 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (14, N'Отель 6', 1, N'2 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (15, N'Отель 7', 5, N'1 ')
+INSERT [dbo].[Hotel] ([id], [Name], [CountOfStars], [CountryCode]) VALUES (16, N'Отель 8', 5, N'6 ')
+SET IDENTITY_INSERT [dbo].[Hotel] OFF
+GO
+SET IDENTITY_INSERT [dbo].[HotelComment] ON 
+
+INSERT [dbo].[HotelComment] ([id], [Hoteled], [Text], [Author], [CreationDate]) VALUES (1, 1, N'текст', N'комент', CAST(N'2000-02-01T00:00:00.000' AS DateTime))
+INSERT [dbo].[HotelComment] ([id], [Hoteled], [Text], [Author], [CreationDate]) VALUES (2, 2, N'текст 2', N'комент 2', CAST(N'2001-01-02T00:00:00.000' AS DateTime))
+SET IDENTITY_INSERT [dbo].[HotelComment] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Hotellmage] ON 
+
+INSERT [dbo].[Hotellmage] ([id], [Hoteled], [ImageSouce]) VALUES (1, 1, NULL)
+INSERT [dbo].[Hotellmage] ([id], [Hoteled], [ImageSouce]) VALUES (2, 2, NULL)
+SET IDENTITY_INSERT [dbo].[Hotellmage] OFF
+GO
+SET IDENTITY_INSERT [dbo].[HotelOfTour] ON 
+
+INSERT [dbo].[HotelOfTour] ([HotelId], [TourId]) VALUES (1, 1)
+INSERT [dbo].[HotelOfTour] ([HotelId], [TourId]) VALUES (2, 2)
+SET IDENTITY_INSERT [dbo].[HotelOfTour] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Tour] ON 
+
+INSERT [dbo].[Tour] ([id], [TicketCount], [Name], [Description], [ImagePreview], [Price], [isActual]) VALUES (1, 13, N'тур 1', N'1', NULL, 1000.0000, 1)
+INSERT [dbo].[Tour] ([id], [TicketCount], [Name], [Description], [ImagePreview], [Price], [isActual]) VALUES (2, 20, N'тур 2', N'2', NULL, 1200.0000, 1)
+SET IDENTITY_INSERT [dbo].[Tour] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Type] ON 
+
+INSERT [dbo].[Type] ([id], [Name], [Description]) VALUES (1, N'тип 1', NULL)
+INSERT [dbo].[Type] ([id], [Name], [Description]) VALUES (2, N'тип 2', NULL)
+INSERT [dbo].[Type] ([id], [Name], [Description]) VALUES (3, N'тип 3', NULL)
+INSERT [dbo].[Type] ([id], [Name], [Description]) VALUES (4, N'тип 4', NULL)
+INSERT [dbo].[Type] ([id], [Name], [Description]) VALUES (5, N'тип 5', NULL)
+SET IDENTITY_INSERT [dbo].[Type] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TypeOfTour] ON 
+
+INSERT [dbo].[TypeOfTour] ([Tourid], [Typeid]) VALUES (1, 1)
+INSERT [dbo].[TypeOfTour] ([Tourid], [Typeid]) VALUES (2, 2)
+SET IDENTITY_INSERT [dbo].[TypeOfTour] OFF
+GO
+ALTER TABLE [dbo].[Hotel]  WITH CHECK ADD  CONSTRAINT [FK_Hotel_Country] FOREIGN KEY([CountryCode])
+REFERENCES [dbo].[Country] ([Code])
+GO
+ALTER TABLE [dbo].[Hotel] CHECK CONSTRAINT [FK_Hotel_Country]
+GO
+ALTER TABLE [dbo].[HotelComment]  WITH CHECK ADD  CONSTRAINT [FK_HotelComment_Hotel] FOREIGN KEY([Hoteled])
+REFERENCES [dbo].[Hotel] ([id])
+GO
+ALTER TABLE [dbo].[HotelComment] CHECK CONSTRAINT [FK_HotelComment_Hotel]
+GO
+ALTER TABLE [dbo].[Hotellmage]  WITH CHECK ADD  CONSTRAINT [FK_Hotellmage_Hotel] FOREIGN KEY([Hoteled])
+REFERENCES [dbo].[Hotel] ([id])
+GO
+ALTER TABLE [dbo].[Hotellmage] CHECK CONSTRAINT [FK_Hotellmage_Hotel]
+GO
+ALTER TABLE [dbo].[HotelOfTour]  WITH CHECK ADD  CONSTRAINT [FK_HotelOfTour_Hotel] FOREIGN KEY([HotelId])
+REFERENCES [dbo].[Hotel] ([id])
+GO
+ALTER TABLE [dbo].[HotelOfTour] CHECK CONSTRAINT [FK_HotelOfTour_Hotel]
+GO
+ALTER TABLE [dbo].[HotelOfTour]  WITH CHECK ADD  CONSTRAINT [FK_HotelOfTour_Tour] FOREIGN KEY([TourId])
+REFERENCES [dbo].[Tour] ([id])
+GO
+ALTER TABLE [dbo].[HotelOfTour] CHECK CONSTRAINT [FK_HotelOfTour_Tour]
+GO
+ALTER TABLE [dbo].[TypeOfTour]  WITH CHECK ADD  CONSTRAINT [FK_TypeOfTour_Tour] FOREIGN KEY([Tourid])
+REFERENCES [dbo].[Tour] ([id])
+GO
+ALTER TABLE [dbo].[TypeOfTour] CHECK CONSTRAINT [FK_TypeOfTour_Tour]
+GO
+ALTER TABLE [dbo].[TypeOfTour]  WITH CHECK ADD  CONSTRAINT [FK_TypeOfTour_Type] FOREIGN KEY([Typeid])
+REFERENCES [dbo].[Type] ([id])
+GO
+ALTER TABLE [dbo].[TypeOfTour] CHECK CONSTRAINT [FK_TypeOfTour_Type]
+GO
+USE [master]
+GO
+ALTER DATABASE [ToursBase] SET  READ_WRITE 
+GO

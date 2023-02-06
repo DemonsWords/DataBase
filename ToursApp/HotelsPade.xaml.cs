@@ -23,7 +23,7 @@ namespace ToursApp
         public HotelsPade()
         {
             InitializeComponent();
-            DGridHotels.ItemsSource = ToursBaseEntities.GetContext().Hotel.ToList();
+            DGridHotels.ItemsSource = ToursBaseEntities1.GetContext().Hotel.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,11 +52,11 @@ namespace ToursApp
             }
             try
             {
-                ToursBaseEntities.GetContext().Hotel.RemoveRange(hotelForRemoving);
-                ToursBaseEntities.GetContext().SaveChanges();
+                ToursBaseEntities1.GetContext().Hotel.RemoveRange(hotelForRemoving);
+                ToursBaseEntities1.GetContext().SaveChanges();
                 MessageBox.Show("Данные удалены!");
 
-                DGridHotels.ItemsSource = ToursBaseEntities.GetContext().Hotel.ToList();
+                DGridHotels.ItemsSource = ToursBaseEntities1.GetContext().Hotel.ToList();
             }
             catch (Exception ex)
             {
@@ -68,8 +68,8 @@ namespace ToursApp
         {
             if (Visibility == Visibility.Visible)
             {
-                ToursBaseEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                DGridHotels.ItemsSource = ToursBaseEntities.GetContext().Hotel.ToList();
+                ToursBaseEntities1.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                DGridHotels.ItemsSource = ToursBaseEntities1.GetContext().Hotel.ToList();
             }
         }
     }

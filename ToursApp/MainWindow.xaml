@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToursApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Преподаватели" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75*"/>
@@ -13,10 +13,10 @@
             <RowDefinition Height="30*"/>
         </Grid.RowDefinitions>
         <Image Source="/Resources/img_522952.png" HorizontalAlignment="Left" Margin="32,10,0,10"  />
-        <TextBlock Text="Header" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Language="ru-ru" Text="Преподаватели"/></TextBlock>
         <Grid Background="AliceBlue" Panel.ZIndex="-2"></Grid>
         <Grid Grid.Row="2" Background="Blue"></Grid>
         <Frame NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered" Grid.Row="1" Name="MainFrame"></Frame>
-        <Button Content="Back" Name="BtnBack"  HorizontalAlignment="Right" VerticalAlignment="Center"  Click="BtnBack_Click"></Button>
+        <Button Content="Назад" Name="BtnBack"  HorizontalAlignment="Right" VerticalAlignment="Center"  Click="BtnBack_Click"></Button>
     </Grid>
 </Window>

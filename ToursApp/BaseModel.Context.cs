@@ -13,26 +13,20 @@ namespace ToursApp
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ToursBaseEntities : DbContext
+    public partial class ToursBaseEntities1 : DbContext
     {
-        private static ToursBaseEntities _context;
-
-        public static ToursBaseEntities GetContext()
+        public static ToursBaseEntities1 _context;
+        public static ToursBaseEntities1 GetContext()
         {
             if (_context == null)
-                _context = new ToursBaseEntities();
+                _context = new ToursBaseEntities1();
             return _context;
         }
-        public ToursBaseEntities()
-            : base("name=ToursBaseEntities")
+        public ToursBaseEntities1()
+            : base("name=ToursBaseEntities1")
         {
         }
-
-        internal static object GetContext()
-        {
-            throw new NotImplementedException();
-        }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

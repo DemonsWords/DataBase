@@ -20,7 +20,7 @@ namespace ToursApp
     /// </summary>
     public partial class AddEditPade : Page
     {
-        private Hotel _currentHotel = new Hotel();
+        private readonly Hotel _currentHotel = new Hotel();
         public AddEditPade(Hotel selectedHotel)
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace ToursApp
                 _currentHotel = selectedHotel;
 
             DataContext = _currentHotel;
-            ComboCountries.ItemsSource = ToursBaseEntities.GetContext().Country.ToList();
+            ComboCountries.ItemsSource = ToursBaseEntities1.GetContext().Country.ToList();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -37,11 +37,11 @@ namespace ToursApp
             StringBuilder errors = new StringBuilder();
 
             if (string.IsNullOrWhiteSpace(_currentHotel.Name))
-                errors.AppendLine("Укажите название отеля");
+                errors.AppendLine("Укажите имя преподавателя");
             if (_currentHotel.CountOfStars < 1 || _currentHotel.CountOfStars > 5)
-                errors.AppendLine("Количество звёзд - число от 1 до 5");
+                errors.AppendLine("Класс - число от 1 до 5");
             if (_currentHotel.Country == null)
-                errors.AppendLine("Выберите страну");
+                errors.AppendLine("Выберите предмет");
 
             if (errors.Length > 0)
             {
@@ -50,10 +50,10 @@ namespace ToursApp
             }
 
             if (_currentHotel.id == 0)
-                ToursBaseEntities.GetContext().Hotel.Add(_currentHotel);
+                ToursBaseEntities1.GetContext().Hotel.Add(_currentHotel);
             try
             {
-                ToursBaseEntities.GetContext().SaveChanges();
+                ToursBaseEntities1.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена!");
                 Manager.MainFrame.GoBack();
             }

@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="Code" />
           </Key>
-          <Property Name="Code" Type="nchar" MaxLength="2" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="nchar" MaxLength="2" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Hotel">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="CountOfStars" Type="int" Nullable="false" />
           <Property Name="CountryCode" Type="nchar" MaxLength="2" Nullable="false" />
@@ -25,7 +25,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Hoteled" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Author" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -35,7 +35,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Hoteled" Type="int" Nullable="false" />
           <Property Name="ImageSouce" Type="varbinary(max)" />
         </EntityType>
@@ -44,7 +44,7 @@
             <PropertyRef Name="HotelId" />
             <PropertyRef Name="TourId" />
           </Key>
-          <Property Name="HotelId" Type="int" Nullable="false" />
+          <Property Name="HotelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TourId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -61,7 +61,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketCount" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -83,7 +83,7 @@
             <PropertyRef Name="Typeid" />
           </Key>
           <Property Name="Tourid" Type="int" Nullable="false" />
-          <Property Name="Typeid" Type="int" Nullable="false" />
+          <Property Name="Typeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FK_Hotel_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="1" />
@@ -217,7 +217,7 @@
           <Key>
             <PropertyRef Name="Code" />
           </Key>
-          <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Hotel" Relationship="Self.FK_Hotel_Country" FromRole="Country" ToRole="Hotel" />
         </EntityType>
@@ -331,7 +331,7 @@
           <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
           <End Role="Type" Type="Self.Type" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ToursBaseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ToursBaseEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Country" EntityType="Self.Country" />
           <EntitySet Name="Hotel" EntityType="Self.Hotel" />
           <EntitySet Name="HotelComment" EntityType="Self.HotelComment" />
@@ -365,7 +365,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище ToursBaseModelContainer" CdmEntityContainer="ToursBaseEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ToursBaseModelContainer" CdmEntityContainer="ToursBaseEntities1">
           <EntitySetMapping Name="Country">
             <EntityTypeMapping TypeName="ToursBaseModel.Country">
               <MappingFragment StoreEntitySet="Country">
